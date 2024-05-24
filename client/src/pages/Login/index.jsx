@@ -1,4 +1,5 @@
 import LoginForm from '../../components/LoginForm/index.jsx'
+import './Login.css'
 
 export default function Login() {
   return (

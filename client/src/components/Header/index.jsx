@@ -1,21 +1,27 @@
+import { NavLink } from 'react-router-dom'
+import { ROUTES } from '../../config'
+import ArgentBankLogo from '../../assets/img/logo/argentBankLogo.png'
+import './Header.css'
+
 export default function Header() {
   return (
     <nav className="main-nav">
-      <a className="main-nav-logo" href="./index.html">
+      <NavLink className="main-nav-logo" to={ROUTES.HOME}>
         <img
           className="main-nav-logo-image"
-          src="./img/logo/argentBankLogo.png"
+          src={ArgentBankLogo}
           alt="Argent Bank Logo"
         />
         <h1 className="sr-only">Argent Bank</h1>
-      </a>
+      </NavLink>
       <div>
-        <a className="main-nav-item" href="./sign-in.html">
+        <NavLink className="main-nav-item" to={ROUTES.LOGIN}>
           <i className="fa fa-user-circle"></i>
-        </a>
-        <a className="main-nav-item" href="./index.html">
+        </NavLink>
+
+        <NavLink className="main-nav-item" to={ROUTES.HOME}>
           <i className="fa fa-sign-out"></i>
-        </a>
+        </NavLink>
       </div>
     </nav>
   )

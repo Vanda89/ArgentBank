@@ -1,3 +1,7 @@
+import './LoginForm.css'
+import { NavLink } from 'react-router-dom'
+import { ROUTES } from '../../config'
+
 export default function LoginForm() {
   return (
     <form>
@@ -13,10 +17,19 @@ export default function LoginForm() {
         <input type="checkbox" id="remember-me" />
         <label htmlFor="remember-me">Remember me</label>
       </div>
+      {/*
 
-      <a href="./user.html" className="sign-in-button">
+
+  <button type="submit" className="sign-in-button">
         Sign In
-      </a>
+      </button>
+
+
+  */}
+
+      <NavLink to={ROUTES.PROFILE} className="sign-in-button">
+        Sign In
+      </NavLink>
     </form>
   )
 }
