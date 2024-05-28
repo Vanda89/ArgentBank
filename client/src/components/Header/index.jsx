@@ -1,9 +1,19 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../config'
 import ArgentBankLogo from '../../assets/img/logo/argentBankLogo.png'
 import './Header.css'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../actions/authActions'
 
 export default function Header() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    await dispatch(logout())
+    navigate(ROUTES.HOME)
+  }
+
   return (
     <nav className="main-nav">
       <NavLink className="main-nav-logo" to={ROUTES.HOME}>
@@ -19,7 +29,7 @@ export default function Header() {
           <i className="fa fa-user-circle"></i>
         </NavLink>
 
-        <NavLink className="main-nav-item" to={ROUTES.HOME}>
+        <NavLink className="main-nav-item" onClick={handleLogout}>
           <i className="fa fa-sign-out"></i>
         </NavLink>
       </div>
