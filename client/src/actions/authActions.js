@@ -3,6 +3,7 @@ import { login as apiLogin } from '../services/apiService'
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const SET_TOKEN = 'SET_TOKEN'
 export const LOGOUT = 'LOGOUT'
 
 export const loginStart = () => {
@@ -25,8 +26,14 @@ export const loginFailure = (error) => {
   }
 }
 
+export const setToken = (token) => {
+  return {
+    type: SET_TOKEN,
+    payload: token,
+  }
+}
+
 export const logout = () => {
-  console.log('LOGOUT ACTIONS')
   return (dispatch) => {
     dispatch({ type: 'LOGOUT' })
   }
@@ -38,7 +45,10 @@ export const login = ({ email, password }) => {
     try {
       const token = await apiLogin({ email, password })
       dispatch(loginSuccess(token))
-      return token
+      console.log(token)
+      if (token && token.body) {
+        dispatch(setToken(token.body.token))
+      }
     } catch (error) {
       console.log(error)
       dispatch(loginFailure(error.toString()))

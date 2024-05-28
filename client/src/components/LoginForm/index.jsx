@@ -1,17 +1,30 @@
 import './LoginForm.css'
-import { useDispatch } from 'react-redux'
-import { login } from '../../actions/authActions'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { login } from '../../actions/authActions'
 import { ROUTES } from '../../config'
 
+/**
+ * Get the token from the auth state to redirect the user to the profile page
+ * if he is already logged in
+ *
+ * @returns {JSX.Element}
+ */
 export default function LoginForm() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const token = useSelector((state) => state.auth.token)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (token) {
+      navigate(ROUTES.PROFILE)
+    }
+  }, [token, navigate])
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -23,10 +36,7 @@ export default function LoginForm() {
     }
 
     try {
-      const user = await dispatch(login({ email, password }))
-      if (user) {
-        navigate(ROUTES.PROFILE)
-      }
+      await dispatch(login({ email, password }))
     } catch (error) {
       console.error(error)
       setError('Failed to log in')
@@ -58,12 +68,7 @@ export default function LoginForm() {
         <input type="checkbox" id="remember-me" />
         <label htmlFor="remember-me">Remember me</label>
       </div>
-      {/*
-      <NavLink to={ROUTES.PROFILE} className="sign-in-button">
-        Sign In
-      </NavLink>
 
-  */}
       <button type="submit" className="sign-in-button" onClick={handleLogin}>
         Sign In
       </button>

@@ -3,6 +3,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
+  SET_TOKEN,
 } from '../actions/authActions'
 
 export const initialState = {
@@ -30,6 +31,11 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload,
+      }
+    case SET_TOKEN:
+      return {
+        ...state,
+        token: action.payload,
       }
     case LOGOUT:
       return initialState
