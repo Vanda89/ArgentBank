@@ -4,10 +4,13 @@ import Router from './Router.jsx'
 import Header from './components/Header/index.jsx'
 import Footer from './components/Footer/index.jsx'
 import './index.css'
+import { Provider } from 'react-redux'
+import store from './store/store'
 
 function App() {
+  console.log(store.getState())
   return (
-    <>
+    <Provider store={store}>
       <React.StrictMode>
         <BrowserRouter>
           <Header />
@@ -15,7 +18,7 @@ function App() {
           <Footer />
         </BrowserRouter>
       </React.StrictMode>
-    </>
+    </Provider>
   )
 }
 
