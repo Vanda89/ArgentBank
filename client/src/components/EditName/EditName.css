@@ -1,0 +1,38 @@
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 1rem;
+
+}
+
+.inputs-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+}
+
+.edit-form .input-wrapper {
+    margin: 0;
+}
+
+.edit-form .input-wrapper input {
+    padding: 0.4rem 0.7rem;
+    color: #12002B;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.buttons-container button {
+    color: #00BC77;
+    font-weight: 700;
+    border: 1px solid #00BC77;
+    padding: 0.4rem 2.5rem;
+    width: 150px;
+
+}
