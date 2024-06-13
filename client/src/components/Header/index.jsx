@@ -2,12 +2,15 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { ROUTES } from '../../config'
 import ArgentBankLogo from '../../assets/img/logo/argentBankLogo.png'
 import './Header.css'
-import { useDispatch } from 'react-redux'
-import { logout } from '../../actions/authActions'
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../../store/slices/authSlice'
+import { selectToken, selectProfile } from '../../store/slices/selectors'
 
 export default function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const token = useSelector(selectToken)
+  const profile = useSelector(selectProfile)
 
   const handleLogout = async () => {
     await dispatch(logout())
@@ -27,11 +30,16 @@ export default function Header() {
       <div>
         <NavLink className="main-nav-item" to={ROUTES.LOGIN}>
           <i className="fa fa-user-circle"></i>
+          {!token ? 'Sign in' : profile.firstName}
         </NavLink>
-
-        <NavLink className="main-nav-item" onClick={handleLogout}>
-          <i className="fa fa-sign-out"></i>
-        </NavLink>
+        {token ? (
+          <NavLink className="main-nav-item" onClick={handleLogout}>
+            <i className="fa fa-sign-out"></i>
+            Sign Out
+          </NavLink>
+        ) : (
+          ''
+        )}
       </div>
     </nav>
   )
