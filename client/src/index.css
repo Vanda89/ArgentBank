@@ -8,13 +8,19 @@ html {
 
 body {
   margin: 0;
+
+}
+
+#root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
 }
 
 .main {
   flex: 1;
+  overflow: auto;
 }
 
 .bg-dark {
@@ -36,4 +42,9 @@ body {
   width: 1px !important;
   white-space: nowrap !important;
   /* 3 */
+}
+
+.error-message {
+  font-size: 16px;
+  margin: 0.5rem 0;
 }

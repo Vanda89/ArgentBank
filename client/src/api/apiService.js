@@ -1,5 +1,14 @@
 const BASE_URL = 'http://localhost:3001/api/v1'
 
+/**
+ * Log in a user
+ * @async
+ * @param {Object} credentials - The user's credentials
+ * @param {string} credentials.username - The user's username
+ * @param {string} credentials.password - The user's password
+ * @returns {Promise<Object>} The response data
+ * @throws {Error} If the response is not ok
+ */
 export const login = async (credentials) => {
   try {
     const response = await fetch(`${BASE_URL}/user/login`, {
@@ -23,6 +32,15 @@ export const login = async (credentials) => {
   }
 }
 
+/**
+ * Sign up a new user
+ * @async
+ * @param {Object} user - The new user's data
+ * @param {string} user.username - The new user's username
+ * @param {string} user.password - The new user's password
+ * @returns {Promise<Object>} The response data
+ * @throws {Error} If the response is not ok
+ */
 export const signup = async (user) => {
   try {
     const response = await fetch(`${BASE_URL}/user/signup`, {
@@ -45,6 +63,13 @@ export const signup = async (user) => {
   }
 }
 
+/**
+ * Get a user's profile
+ * @async
+ * @param {string} token - The user's authentication token
+ * @returns {Promise<Object>} The user's profile data
+ * @throws {Error} If the response is not ok
+ */
 export const getProfile = async (token) => {
   try {
     const response = await fetch(`${BASE_URL}/user/profile`, {
@@ -54,7 +79,6 @@ export const getProfile = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(response)
 
     if (!response.ok) {
       const responseBody = await response.json()
@@ -68,8 +92,17 @@ export const getProfile = async (token) => {
   }
 }
 
+/**
+ * Update a user's profile
+ * @async
+ * @param {string} token - The user's authentication token
+ * @param {Object} profile - The new profile data
+ * @returns {Promise<Object>} The response data
+ * @throws {Error} If the response is not ok
+ */
 export const updateProfile = async (token, profile) => {
   try {
+    console.log(token, 'token')
     const response = await fetch(`${BASE_URL}/user/profile`, {
       method: 'PUT',
       headers: {
