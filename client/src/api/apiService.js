@@ -22,6 +22,7 @@ export const login = async (credentials) => {
     if (!response.ok) {
       const responseBody = await response.json()
       console.error(responseBody)
+
       throw new Error(responseBody.message)
     }
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { login } from '../../store/slices/authSlice'
 import { ROUTES } from '../../config'
-import { selectToken } from '../../store/slices/selectors'
+import { selectToken, selectError } from '../../store/slices/selectors'
 
 /**
  * Get the token from the auth state to redirect the user to the profile page
@@ -16,9 +16,11 @@ export default function LoginForm() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const token = useSelector(selectToken)
+  const error = useSelector(selectError)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [errorMessage, setErrorMessage] = useState({ email: '', password: '' })
   const [rememberMe, setRememberMe] = useState(false)
 
   useEffect(() => {
@@ -35,45 +37,56 @@ export default function LoginForm() {
 
   const validateInputs = (email, password) => {
     const newErrors = { email: '', password: '' }
-    if (!email.trim()) {
+    if (!email) {
       newErrors.email = 'Please enter your email'
+    } else if (!email.trim()) {
+      newErrors.email = 'Please enter a valid email'
     }
-    if (!password.trim()) {
+    if (!password) {
       newErrors.password = 'Please enter your password'
+    } else if (!password.trim()) {
+      newErrors.password = 'Please enter a valid password'
     }
-    setError(newErrors)
+    setErrorMessage(newErrors)
     return newErrors
+  }
+
+  const handleInputChange = (setValue, key, value) => {
+    setValue(value)
+    const newErrors = validateInputs(value, password)
+    const newErrorMessage = { ...errorMessage, [key]: newErrors[key] }
+    setErrorMessage(newErrorMessage)
   }
 
   const handleLogin = async (e) => {
     e.preventDefault()
     const validationErrors = validateInputs(email, password)
     if (validationErrors.email || validationErrors.password) {
+      setErrorMessage(validationErrors)
       return
     }
 
-    try {
-      await dispatch(login({ email, password }))
-      if (rememberMe) {
-        localStorage.setItem('email', email)
-      }
-    } catch (error) {
-      console.error(error)
-      setError('Failed to log in')
+    await dispatch(login({ email, password }))
+    if (rememberMe) {
+      localStorage.setItem('email', email)
     }
   }
 
   return (
-    <form>
+    <form className="login-form">
       <div className="input-wrapper">
         <label htmlFor="email">Username</label>
         <input
           type="text"
           id="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => handleInputChange(setEmail, 'email', e.target.value)}
         />
-        {error.email && <p className="error-message">{error.email}</p>}
+        {errorMessage ? (
+          <p className="error-message">{errorMessage.email}</p>
+        ) : (
+          <p className="error-message"></p>
+        )}
       </div>
       <div className="input-wrapper">
         <label htmlFor="password">Password</label>
@@ -81,10 +94,24 @@ export default function LoginForm() {
           type="password"
           id="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) =>
+            handleInputChange(setPassword, 'password', e.target.value)
+          }
         />
-        {error.password && <p className="error-message">{error.password}</p>}
+        {errorMessage ? (
+          <p className="error-message">{errorMessage.password}</p>
+        ) : (
+          <p className="error-message"></p>
+        )}
       </div>
+      <div>
+        {error ? (
+          <p className="error-message">Invalid email or password</p>
+        ) : (
+          <p className="error-message"></p>
+        )}
+      </div>
+
       <div className="input-remember">
         <input
           type="checkbox"

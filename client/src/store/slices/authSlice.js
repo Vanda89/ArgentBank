@@ -3,7 +3,7 @@ import { login as apiLogin } from '../../api/apiService'
 
 const initialState = {
   loading: false,
-  error: null,
+  error: false,
   token: localStorage.getItem('token') || '',
 }
 
@@ -15,16 +15,11 @@ const initialState = {
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }) => {
-    try {
-      const response = await apiLogin({ email, password })
-      if (response.body.token) {
-        localStorage.setItem('token', response.body.token)
-      }
-      return { token: response.body.token, error: response.error }
-    } catch (err) {
-      console.error('An error occurred during login:', err)
-      throw err
+    const response = await apiLogin({ email, password })
+    if (response.body.token) {
+      localStorage.setItem('token', response.body.token)
     }
+    return { token: response.body.token, error: response.error }
   },
 )
 
@@ -68,6 +63,6 @@ const authSlice = createSlice({
   },
 })
 
-export const { setToken, logout } = authSlice.actions
+export const { setToken, logout, resetError } = authSlice.actions
 
 export default authSlice.reducer

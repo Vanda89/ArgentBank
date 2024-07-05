@@ -18,3 +18,5 @@ export const selectLoading = (state) => state.auth.loading
  * @returns {Object} The profile
  */
 export const selectProfile = (state) => state.user.profile
+
+export const selectError = (state) => state.auth.error
