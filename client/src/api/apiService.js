@@ -102,7 +102,6 @@ export const getProfile = async (token) => {
  */
 export const updateProfile = async (token, profile) => {
   try {
-    console.log(token, 'token')
     const response = await fetch(`${BASE_URL}/user/profile`, {
       method: 'PUT',
       headers: {

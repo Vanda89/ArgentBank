@@ -51,7 +51,7 @@ export default function Profile() {
   const handleEdit = () => {
     setIsEditButtonClicked((currentState) => !currentState)
   }
-  console.log(profile)
+
   return (
     <main className="main bg-dark">
       <div className="header">

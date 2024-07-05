@@ -8,31 +8,36 @@ const initialState = {
 }
 
 /**
- * Log in the user
- * @param {object} credentials - The user credentials (email and password)
- * @returns {Promise} The promise object representing the user token
+ * Log in the user asynchronously.
+ * @param {Object} credentials - The user credentials (email and password).
+ * @returns {Promise} A promise object representing the user token and potential error.
  */
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }) => {
-    const response = await apiLogin({ email, password })
-    if (response.body.token) {
-      localStorage.setItem('token', response.body.token)
+    try {
+      const response = await apiLogin({ email, password })
+      if (response.body.token) {
+        localStorage.setItem('token', response.body.token)
+      }
+      return { token: response.body.token, error: response.error }
+    } catch (err) {
+      console.error('An error occurred during login:', err)
+      throw err
     }
-    return { token: response.body.token, error: response.error }
   },
 )
 
 /**
- * The auth slice
+ * The auth slice for managing user authentication, token storage, and logging out.
  * @type {Slice}
  * @name authSlice
  * @returns {Object} The auth slice
  * @property {Object} initialState - The initial state
- * @property {Function} extraReducers - The extra reducers
- * @property {Function} setToken - The set token function
- * @property {Function} logout - The logout function
- * @property {Function} login - The login function
+ * @property {Function} setToken - Function to set the authentication token
+ * @property {Function} logout - Function to log the user out
+ * @property {Function} login - Function to log the user in.
+ * Handles pending, fulfilled, and rejected states through extraReducers.
  */
 const authSlice = createSlice({
   name: 'auth',

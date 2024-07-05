@@ -11,9 +11,10 @@ const initialState = {
 }
 
 /**
- * Fetch the user profile
+ * Asynchronously fetches the user profile using the provided token.
  * @param {string} token - The user token
- * @returns {Promise} The promise object representing the user profile
+ * @param {function} rejectWithValue - A function to handle error responses from the API.
+ * @returns {Promise<object>} A promise that resolves to the user profile data.
  */
 export const fetchProfile = createAsyncThunk(
   'user/getProfile',
@@ -22,16 +23,18 @@ export const fetchProfile = createAsyncThunk(
       const response = await apiGetProfile(token)
       return { profile: response.body }
     } catch (err) {
+      console.error('An error occurred in fetchProfile:', err)
       return rejectWithValue(err.response.data)
     }
   },
 )
 
 /**
- * Update the user profile
+ * Asynchronously updates the user profile using the provided token and profile data.
  * @param {string} token - The user token
  * @param {object} profile - The user profile
- * @returns {Promise} The promise object representing the updated user profile
+ * @param {function} rejectWithValue - A function to handle error responses from the API.
+ * @returns {Promise<object>} A promise that resolves to the updated user profile data.
  */
 export const updateProfile = createAsyncThunk(
   'user/updateProfile',
@@ -40,7 +43,7 @@ export const updateProfile = createAsyncThunk(
       const response = await apiUpdateProfile(token, profile)
       return { profile: response.body }
     } catch (err) {
-      console.log(err.response.data, 'err.response.data')
+      console.error('An error occurred in updateProfile:', err)
       return rejectWithValue(err.response.data)
     }
   },
@@ -51,10 +54,11 @@ export const updateProfile = createAsyncThunk(
  * @type {Slice}
  * @name userSlice
  * @returns {Object} The user slice
- * @property {Object} initialState - The initial state
- * @property {Function} extraReducers - The extra reducers
- * @property {Function} fetchProfile - The fetch profile function
- * @property {Function} updateProfile - The update profile function
+ * @property {Object} initialState - The initial state with loading and error status
+ * @property {Function} fetchProfile - Thunk action creator for fetching user profile.
+ * Handles loading state and error handling.
+ * @property {Function} updateProfile -  Thunk action creator for updating user profile.
+ * Handles loading state, error handling, and profile update.
  */
 const userSlice = createSlice({
   name: 'user',
