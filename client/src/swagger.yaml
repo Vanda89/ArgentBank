@@ -135,9 +135,51 @@ paths:
             $ref: '#/definitions/Transactions'
         '400':
           description: Invalid Fields
+        '401':
+          description: Invalid token
+        '403':
+          description: Access Denied
+        '404':
+          description: Transactions not found
         '500':
           description: Internal Server Error
   /user/transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Transaction API
+      description: API for fetching a specific transaction
+      parameters:
+        - in: path
+          name: transactionId
+          type: string
+          description: ID of the transaction to retrieve
+          required: true
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          schema:
+            $ref: '#/definitions/TransactionDetails'
+        '400':
+          description: Invalid Fields
+        '401':
+          description: Invalid token
+        '403':
+          description: Access Denied
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+
     patch:
       security:
         - Bearer: []
@@ -169,6 +211,10 @@ paths:
             $ref: '#/definitions/TransactionDetails'
         '400':
           description: Invalid Fields
+        '401':
+          description: Invalid token
+        '403':
+          description: Access Denied
         '404':
           description: Transaction not found
         '500':
