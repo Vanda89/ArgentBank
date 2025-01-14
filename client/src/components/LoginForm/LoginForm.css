@@ -27,6 +27,7 @@
 
 .input-wrapper label {
   font-weight: bold;
+  padding-bottom: 10px;
 }
 
 .input-wrapper input {
@@ -38,5 +39,5 @@
   color: red;
   text-align: left;
   min-height: 1rem;
-  font-size: 14px;
+  font-size: 12px;
 }

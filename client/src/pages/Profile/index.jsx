@@ -52,15 +52,18 @@ export default function Profile() {
     setIsEditButtonClicked((currentState) => !currentState)
   }
 
+  const shouldShowLoader =
+    loading || profile === null || Object.keys(profile).length === 0
+
   return (
     <main className="main bg-dark">
       <div className="header">
         <h1>
           Welcome back
           <br />
-          {loading || profile === null || Object.keys(profile).length === 0 ? (
+          {shouldShowLoader ? (
             <Loader />
-          ) : profile ? (
+          ) : (
             <>
               {!isEditButtonClicked &&
                 `${profile.firstName} ${profile.lastName} !`}
@@ -72,15 +75,13 @@ export default function Profile() {
                 />
               )}
             </>
-          ) : (
-            'Error loading user data'
           )}
         </h1>
-        {!isEditButtonClicked && profile && (
+        {!isEditButtonClicked && profile ? (
           <button type="button" className="edit-button" onClick={handleEdit}>
             Edit
           </button>
-        )}
+        ) : null}
       </div>
       <h2 className="sr-only">Accounts</h2>
 
