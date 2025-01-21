@@ -10,7 +10,7 @@ export default defineConfig({
       interval: 80,
     },
     proxy: {
-      '/api': 'http://localhost:3001',
+      '/api': process.env.VITE_API_BASE_URL,
     },
   },
 })
