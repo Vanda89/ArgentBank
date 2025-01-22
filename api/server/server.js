@@ -10,6 +10,7 @@ dotEnv.config()
 
 const app = express()
 const PORT = process.env.PORT || 3001
+const API_HOST = process.env.API_HOST || 'localhost'
 
 // Connect to the database
 dbConnection()
@@ -34,6 +35,6 @@ app.get('/', (req, res, next) => {
 })
 
 app.listen(PORT, () => {
-	console.log(`Server listening on http://localhost:${PORT}`)
+	console.log(`Server listening on http://${API_HOST}:${PORT}`)
 })
 
