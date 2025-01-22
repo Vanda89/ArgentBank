@@ -1,5 +1,3 @@
-const BASE_URL = 'http://localhost:3001/api/v1'
-
 /**
  * Log in a user
  * @async
@@ -11,7 +9,7 @@ const BASE_URL = 'http://localhost:3001/api/v1'
  */
 export const login = async (credentials) => {
   try {
-    const response = await fetch(`${BASE_URL}/user/login`, {
+    const response = await fetch(`/api/v1/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +42,7 @@ export const login = async (credentials) => {
  */
 export const signup = async (user) => {
   try {
-    const response = await fetch(`${BASE_URL}/user/signup`, {
+    const response = await fetch(`/api/v1/user/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +71,7 @@ export const signup = async (user) => {
  */
 export const getProfile = async (token) => {
   try {
-    const response = await fetch(`${BASE_URL}/user/profile`, {
+    const response = await fetch(`/api/v1/user/profile`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -103,7 +101,7 @@ export const getProfile = async (token) => {
  */
 export const updateProfile = async (token, profile) => {
   try {
-    const response = await fetch(`${BASE_URL}/user/profile`, {
+    const response = await fetch(`/api/v1/user/profile`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
