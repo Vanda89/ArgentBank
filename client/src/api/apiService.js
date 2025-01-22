@@ -9,7 +9,8 @@
  */
 export const login = async (credentials) => {
   try {
-    const response = await fetch(`/api/v1/user/login`, {
+    const apiBaseUrl = process.env.VITE_API_BASE_URL
+    const response = await fetch(`${apiBaseUrl}/api/v1/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +43,8 @@ export const login = async (credentials) => {
  */
 export const signup = async (user) => {
   try {
-    const response = await fetch(`/api/v1/user/signup`, {
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+    const response = await fetch(`${apiBaseUrl}/api/v1/user/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +73,8 @@ export const signup = async (user) => {
  */
 export const getProfile = async (token) => {
   try {
-    const response = await fetch(`/api/v1/user/profile`, {
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+    const response = await fetch(`${apiBaseUrl}/api/v1/user/profile`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +104,8 @@ export const getProfile = async (token) => {
  */
 export const updateProfile = async (token, profile) => {
   try {
-    const response = await fetch(`/api/v1/user/profile`, {
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+    const response = await fetch(`${apiBaseUrl}/api/v1/user/profile`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
