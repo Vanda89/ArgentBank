@@ -9,7 +9,7 @@
  */
 export const login = async (credentials) => {
   try {
-    const apiBaseUrl = process.env.VITE_API_BASE_URL
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
     const response = await fetch(`${apiBaseUrl}/api/v1/user/login`, {
       method: 'POST',
       headers: {
